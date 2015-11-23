@@ -58,13 +58,13 @@ module.exports = AtomPlanner =
 
       else if event.keyCode is KEY_CODE_SPACE
         if range
-          range[ 1 ][ 1 ] = range[ 0 ][ 1 ] + "/#{prefix}#{page}///".length
+          range[ 1 ][ 1 ] = range[ 0 ][ 1 ] + "/#{prefix}#{page}/// ".length
           page += 1
-          activeEditor.setTextInBufferRange range, "/#{prefix}#{page}///"
+          activeEditor.setTextInBufferRange range, "/#{prefix}#{page}/// "
         else
           cursorPoint = activeEditor.getCursorBufferPosition()
           insertRange = [ cursorPoint, cursorPoint ]
-          originalRange = activeEditor.setTextInBufferRange insertRange, "/#{prefix}#{page}///"
+          originalRange = activeEditor.setTextInBufferRange insertRange, "/#{prefix}#{page}/// "
           # Convert to an array because the original Range is immutable.
           range = originalRange.serialize()
 
