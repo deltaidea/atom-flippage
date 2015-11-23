@@ -42,7 +42,6 @@ module.exports = AtomPlanner =
         isCtrlDown = yes
         { page, prefix } = lastPageInfo()
         page += 1
-        console.log "Control on"
 
     workspaceView.addEventListener "keyup", ( event ) ->
       activeEditor = atom.workspace.getActiveTextEditor()
@@ -54,7 +53,6 @@ module.exports = AtomPlanner =
 
       if event.keyCode is KEY_CODE_CTRL
         isCtrlDown = no
-        console.log "Control off"
 
       else if event.keyCode is KEY_CODE_SPACE
         if range
@@ -72,3 +70,6 @@ module.exports = AtomPlanner =
         page = lastPageInfo().page or 1
         r = ( activeEditor.insertText "//// /#{page}///" )[ 0 ]
         activeEditor.setCursorBufferPosition [ r.start.row, r.start.column + 3 ]
+
+      else
+        console.log event.keyCode
