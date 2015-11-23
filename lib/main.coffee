@@ -1,6 +1,25 @@
 KEY_CODE_CTRL = 17
 KEY_CODE_SPACE = 32
 
+pageInfo = ->
+  activeEditor = atom.workspace.getActiveTextEditor()
+
+  page = 1
+  prefix = "p. "
+
+  endRow = activeEditor.getLastBufferRow()
+  endColumn = ( activeEditor.lineTextForBufferRow endRow ).length
+  searchRange = [[ 0, 0 ], [ endRow, endColumn ]]
+  searchRegexp = /\/(.*?)(\d+)\/\/\//
+
+  activeEditor.backwardsScanInBufferRange searchRegexp, searchRange, ({ match, stop }) ->
+    page = +match[ 2 ] + 1
+    prefix = match[ 1 ]
+    stop()
+
+  { page, prefix }
+
+
 module.exports = AtomPlanner =
   activate: ->
     workspaceView = atom.views.getView atom.workspace
@@ -11,14 +30,17 @@ module.exports = AtomPlanner =
     prefix = null
 
     workspaceView.addEventListener "keydown", ( event ) ->
+      activeEditor = atom.workspace.getActiveTextEditor()
+      unless activeEditor
+        return
+
       if isCtrlDown
         return
 
       if event.keyCode is KEY_CODE_CTRL
-        page = 1
         range = null
-        prefix = "p. "
         isCtrlDown = yes
+        { page, prefix } = pageInfo()
         console.log "Control on"
 
     workspaceView.addEventListener "keyup", ( event ) ->
