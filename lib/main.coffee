@@ -58,9 +58,9 @@ module.exports = AtomPlanner =
       else if event.keyCode is KEY_CODE_SPACE
         if range
           page += 1
-          activeEditor.setTextInBufferRange range, " /#{prefix}#{page}///"
+          activeEditor.setTextInBufferRange range, "/#{prefix}#{page}///"
         else
-          r = ( activeEditor.insertText " /#{prefix}#{page}///" )[ 0 ]
+          r = ( activeEditor.insertText "/#{prefix}#{page}///" )[ 0 ]
           # Range instances seem to be immutable.
           # Let's use a Range-compatible array.
           range = [
