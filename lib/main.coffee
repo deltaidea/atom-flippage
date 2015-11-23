@@ -6,10 +6,16 @@ module.exports = AtomPlanner =
     workspaceView = atom.views.getView atom.workspace
 
     isCtrlDown = no
+    page = 1
+    range = null
+    prefix = null
 
     workspaceView.addEventListener "keydown", ( event ) ->
       unless isCtrlDown
         if event.keyCode is KEY_CODE_CTRL
+          page = 1
+          range = null
+          prefix = "p. "
           isCtrlDown = yes
           console.log "Control on"
 
@@ -20,4 +26,21 @@ module.exports = AtomPlanner =
           console.log "Control off"
 
         else if event.keyCode is KEY_CODE_SPACE
-          console.log "Space off"
+          activeEditor = atom.workspace.getActiveTextEditor()
+          if activeEditor
+            if range
+              page += 1
+              activeEditor.setTextInBufferRange range, " /#{prefix}#{page}///"
+            else
+              r = ( activeEditor.insertText " /#{prefix}#{page}///" )[ 0 ]
+              # Range instances seem to be immutable.
+              # Let's use a Range-compatible array.
+              range = [
+                [ r.start.row
+                  r.start.column ]
+                # Offset for when the page number gets longer.
+                # 10 orders of magnitude is enough.
+                [ r.end.row
+                  r.end.column + 10 ]
+              ]
+              console.log range
