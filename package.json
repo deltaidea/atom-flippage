@@ -1,0 +1,21 @@
+{
+  "name": "FlipPage",
+  "description": "FlipPage for Atom",
+  "main": "./lib/main",
+  "version": "0.0.0",
+  "private": "true",
+  "engines": {
+    "atom": "1"
+  },
+  "author": {
+    "name": "Nikita Litvin",
+    "email": "n@deltaidea.com",
+    "url": "https://github.com/deltaidea"
+  },
+  "license": "GPLv3",
+  "repository": "https://github.com/deltaidea/atom-flippage",
+  "homepage": "https://github.com/deltaidea/atom-flippage",
+  "bugs": {
+    "url": "https://github.com/deltaidea/atom-flippage/issues"
+  }
+}
