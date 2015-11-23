@@ -8,9 +8,8 @@ lastPageInfo = ->
   page = 0
   prefix = "p. "
 
-  endRow = activeEditor.getLastBufferRow()
-  endColumn = ( activeEditor.lineTextForBufferRow endRow ).length
-  searchRange = [[ 0, 0 ], [ endRow, endColumn ]]
+  endPoint = activeEditor.getCursorBufferPosition()
+  searchRange = [[ 0, 0 ], [ endPoint.row, endPoint.column ]]
   searchRegexp = /\/([^\/]*?)(\d+)\/\/\//
 
   activeEditor.backwardsScanInBufferRange searchRegexp, searchRange, ({ match, stop }) ->
@@ -59,21 +58,15 @@ module.exports = AtomPlanner =
 
       else if event.keyCode is KEY_CODE_SPACE
         if range
+          range[ 1 ][ 1 ] = range[ 0 ][ 1 ] + "/#{prefix}#{page}///".length
           page += 1
           activeEditor.setTextInBufferRange range, "/#{prefix}#{page}///"
         else
-          r = ( activeEditor.insertText "/#{prefix}#{page}///" )[ 0 ]
-          # Range instances seem to be immutable.
-          # Let's use a Range-compatible array.
-          range = [
-            [ r.start.row
-              r.start.column ]
-            # Offset for when the page number gets longer.
-            # 10 orders of magnitude is enough.
-            [ r.end.row
-              r.end.column + 10 ]
-          ]
-          console.log range
+          cursorPoint = activeEditor.getCursorBufferPosition()
+          insertRange = [ cursorPoint, cursorPoint ]
+          originalRange = activeEditor.setTextInBufferRange insertRange, "/#{prefix}#{page}///"
+          # Convert to an array because the original Range is immutable.
+          range = originalRange.serialize()
 
       else if event.keyCode is KEY_CODE_LESS
         { page } = lastPageInfo()
