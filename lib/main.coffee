@@ -6,7 +6,7 @@ lastPageInfo = ->
   activeEditor = atom.workspace.getActiveTextEditor()
 
   page = 0
-  prefix = "p. "
+  prefix = ""
 
   endPoint = activeEditor.getCursorBufferPosition()
   searchRange = [[ 0, 0 ], [ endPoint.row, endPoint.column ]]
