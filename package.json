@@ -2,7 +2,7 @@
   "name": "FlipPage",
   "description": "FlipPage for Atom",
   "main": "./lib/main",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": "true",
   "engines": {
     "atom": "1"
