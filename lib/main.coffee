@@ -35,6 +35,7 @@ keydownListener = ( event ) ->
     return
 
   if event.keyCode is KEY_CODE_CTRL
+    console.info "CTRL DOWN"
     range = null
     isCtrlDown = yes
     { page, prefix } = lastPageInfo()
@@ -50,9 +51,11 @@ keyupListener = ( event ) ->
     return
 
   if event.keyCode is KEY_CODE_CTRL
+    console.info "CTRL UP"
     isCtrlDown = no
 
   else if event.keyCode is KEY_CODE_SPACE
+    console.log "KEY_CODE_SPACE"
     if range
       range[ 1 ][ 1 ] = range[ 0 ][ 1 ] + "/#{prefix}#{page}/// ".length
       page += 1
@@ -65,6 +68,7 @@ keyupListener = ( event ) ->
       range = originalRange.serialize()
 
   else if event.keyCode is KEY_CODE_LESS
+    console.log "KEY_CODE_LESS"
     page = lastPageInfo().page or 1
     cursorPoint = activeEditor.getCursorBufferPosition()
     insertRange = [ cursorPoint, cursorPoint ]
