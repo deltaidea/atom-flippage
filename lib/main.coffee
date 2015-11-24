@@ -68,7 +68,9 @@ module.exports = AtomPlanner =
 
       else if event.keyCode is KEY_CODE_LESS
         page = lastPageInfo().page or 1
-        r = ( activeEditor.insertText "//// /#{page}///" )[ 0 ]
+        cursorPoint = activeEditor.getCursorBufferPosition()
+        insertRange = [ cursorPoint, cursorPoint ]
+        r = activeEditor.setTextInBufferRange insertRange, "//// /#{page}///"
         activeEditor.setCursorBufferPosition [ r.start.row, r.start.column + 3 ]
 
       else
