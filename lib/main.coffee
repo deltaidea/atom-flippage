@@ -1,6 +1,6 @@
 KEY_CODE_CTRL = 17
 KEY_CODE_SPACE = 32
-KEY_CODE_LESS = 60
+KEY_CODE_LESS = 226
 
 lastPageInfo = ->
   activeEditor = atom.workspace.getActiveTextEditor()
