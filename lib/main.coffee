@@ -34,7 +34,7 @@ keydownListener = ( event ) ->
   if isCtrlDown
     return
 
-  if event.keyCode is KEY_CODE_CTRL
+  if ( event.keyCode is KEY_CODE_CTRL ) and ( not event.altKey )
     console.info "CTRL DOWN"
     range = null
     isCtrlDown = yes
